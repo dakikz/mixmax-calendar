@@ -902,7 +902,7 @@ function Calendar(_ref) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_4__["default"], null, dataa.map(function (dayEntry, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(CalendarOuter, {
       key: idx
-    }, dayEntry[0], /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Day__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("strong", null, moment__WEBPACK_IMPORTED_MODULE_0___default()(dayEntry[1][0].datez).format("ddd")), moment__WEBPACK_IMPORTED_MODULE_0___default()(dayEntry[1][0].datez).format("MMM D"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Day__WEBPACK_IMPORTED_MODULE_3__["default"], {
       dateArray: dayEntry
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null));
   }));
@@ -921,9 +921,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Day)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Flex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Flex */ "./client/components/Flex/index.js");
-/* harmony import */ var _Typography__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Typography */ "./client/components/Typography/index.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Flex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Flex */ "./client/components/Flex/index.js");
+/* harmony import */ var _Typography__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Typography */ "./client/components/Typography/index.js");
+
 
 
 
@@ -931,28 +934,28 @@ function Day(_ref) {
   var dateArray = _ref.dateArray;
   // console.log(dateArray);
   // return false;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__.FlexItem, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_2__.FlexItem, {
     seven: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_2__["default"], {
     margin: "0 0 10px",
     alignCenter: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_3__["default"], {
     margin: "0 5px 0 0",
     bold: true
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_3__["default"], {
     margin: "0",
     bold: true,
     small: true,
     dimmed: true
-  }, "Dec 15")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Date: ".concat(dateArray[0]), dateArray[1].map(function (item, i) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+  }, "Dec 15")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_2__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, "Date: ".concat(dateArray[0]), dateArray[1].map(function (item, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
       key: i,
       style: {
         display: "block",
         width: "100%",
         border: "1px solid green"
       }
-    }, "time: ".concat(item.datez));
+    }, "time: ".concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(item.datez).format("LT")));
   }))));
 }
 

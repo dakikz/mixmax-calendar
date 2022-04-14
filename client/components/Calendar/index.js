@@ -29,7 +29,8 @@ export default function Calendar({ post }) {
     <Flex>
       {dataa.map((dayEntry, idx) => (
         <CalendarOuter key={idx}>
-          {dayEntry[0]}
+          <strong>{moment(dayEntry[1][0].datez).format("ddd")}</strong>
+          {moment(dayEntry[1][0].datez).format("MMM D")}
           <Day dateArray={dayEntry} />
 
           <br />

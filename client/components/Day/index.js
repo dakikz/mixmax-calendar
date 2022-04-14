@@ -1,3 +1,4 @@
+import moment from "moment";
 import React from "react";
 
 import Flex, { FlexItem } from "../Flex";
@@ -28,7 +29,7 @@ export default function Day({ dateArray }) {
                 border: "1px solid green",
               }}
             >
-              {`time: ${item.datez}`}
+              {`time: ${moment(item.datez).format("LT")}`}
             </p>
           ))}
         </div>
