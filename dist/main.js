@@ -872,17 +872,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Day__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Day */ "./client/components/Day/index.js");
 /* harmony import */ var _Flex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Flex */ "./client/components/Flex/index.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 
 
 
 
 
+
+var CalendarOuter = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
+  displayName: "CalendarOuter",
+  componentId: "sc-1qsx8w1-0"
+})(["display:flex;border:1px solid greenyellow;"]);
 function Calendar(_ref) {
   var post = _ref.post;
-  console.log(post.timeslots);
   var obj = post.timeslots.map(function (x) {
     var obj = {
-      // date: moment(x).format("ddd MMM Do"),
+      datez: x,
       date: moment__WEBPACK_IMPORTED_MODULE_0___default()(x).format("DD/MM/YY"),
       time: moment__WEBPACK_IMPORTED_MODULE_0___default()(x).format("HH:mm")
     };
@@ -890,43 +895,16 @@ function Calendar(_ref) {
   }).sort(function (a, b) {
     return a.date.localeCompare(b.date);
   });
-  console.log(obj);
 
-  var groupedData2 = lodash__WEBPACK_IMPORTED_MODULE_2___default().groupBy(obj, "date"); // console.log(groupedData2);
-  // const groupedData = _.groupBy(
-  //   post.timeslots.map((v) => {
-  //     let newObj = v;
-  //     // console.log(v);
-  //     console.log(v.split("T"));
-  //     newObj = moment(v).format("MMMM Do YYYY");
-  //     // newObj = v;
-  //     // console.log(newObj);
-  //     return newObj;
-  //   })
-  // );
-
+  var groupedData2 = lodash__WEBPACK_IMPORTED_MODULE_2___default().groupBy(obj, "date");
 
   var dataa = Object.entries(groupedData2);
-  console.log(dataa);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_4__["default"], null, dataa.map(function (v, idx) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_4__["default"], null, dataa.map(function (dayEntry, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(CalendarOuter, {
       key: idx
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-      style: {
-        display: "block",
-        width: "100%",
-        border: "1px solid red"
-      }
-    }, "Date: ".concat(v[0]), v[1].map(function (item, i) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-        key: i,
-        style: {
-          display: "block",
-          width: "100%",
-          border: "1px solid green"
-        }
-      }, "time: ".concat(item.time));
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null));
+    }, dayEntry[0], /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Day__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      dateArray: dayEntry
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null));
   }));
 }
 
@@ -949,7 +927,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Day() {
+function Day(_ref) {
+  var dateArray = _ref.dateArray;
+  // console.log(dateArray);
+  // return false;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__.FlexItem, {
     seven: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__["default"], {
@@ -958,12 +939,21 @@ function Day() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
     margin: "0 5px 0 0",
     bold: true
-  }, "Monday"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
     margin: "0",
     bold: true,
     small: true,
     dimmed: true
-  }, "Dec 15")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "5:30pm \u2013 6:30pm"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "6:00pm \u2013 7:00pm")));
+  }, "Dec 15")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_1__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, "Date: ".concat(dateArray[0]), dateArray[1].map(function (item, i) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+      key: i,
+      style: {
+        display: "block",
+        width: "100%",
+        border: "1px solid green"
+      }
+    }, "time: ".concat(item.datez));
+  }))));
 }
 
 /***/ }),
