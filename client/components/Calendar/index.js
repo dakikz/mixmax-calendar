@@ -18,6 +18,7 @@ const DayOuter = styled.div`
 const ChangeWeek = styled.div`
   display: flex;
   gap: 10px;
+  margin-bottom: 20px;
   & div {
     display: flex;
     justify-content: center;
@@ -40,6 +41,7 @@ const ChangeWeek = styled.div`
 `;
 
 export default function Calendar({ post, user }) {
+  // Mapping, grouping and sorting the data to be used according to our needs
   const obj = post.timeslots
     .map((x) => {
       let obj = {
@@ -57,6 +59,7 @@ export default function Calendar({ post, user }) {
   const [firstDay, setFirstDay] = useState(0);
   const [lastDay, setLastDay] = useState(daysToShow);
 
+  // Functions to compliment data mapping to show only 7 days - Next and Previous buttons
   const nextWeek = () => {
     if (lastDay >= dataa.length) return;
     setFirstDay(firstDay + daysToShow);
@@ -70,6 +73,7 @@ export default function Calendar({ post, user }) {
 
   return (
     <>
+      {/* Showing the next 7 days or previous 7 days - button is disabled if previous or next weeks are not available */}
       <ChangeWeek>
         <div
           className="profPic"
@@ -89,8 +93,22 @@ export default function Calendar({ post, user }) {
         >
           <FiChevronRight color={colors.lightGrey} size={20} />
         </div>
+        <Typography
+          dimmed
+          style={{
+            fontSize: "14px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {moment(dataa.timeslots).format("MMMM YYYY")}
+        </Typography>
       </ChangeWeek>
       <Flex>
+        {/* Groupping slots by day showing only the first 7 days starting from tomorrow - Using useState above to achieve that */}
+        {/* 1. Group slots by day */}
+        {/* 2. Render the slots for the next 7 days starting tomorrow. Each slot should have the length determined by the `timeslotLengthMinutes` returned by the server. */}
         {dataa.slice(firstDay, lastDay).map((dayEntry, idx) => (
           <React.Fragment key={idx}>
             <DayOuter>

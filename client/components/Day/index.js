@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useState } from "react";
 
-import Flex, { FlexItem } from "../Flex";
+import Flex from "../Flex";
 import Typography from "../Typography";
 import { colors } from "../../config/genericStyles";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import styled from "styled-components";
 const DayInner = styled.div`
   width: 100%;
   background-color: ${colors.white};
+  border-radius: 4px;
   &.noAvailableSlots {
     background-color: ${colors.offwhite};
   }
@@ -50,12 +51,13 @@ const ExpandTimes = styled.div`
 `;
 export default function Day({ dateArray, timeslotLength }) {
   const [expandHours, setExpandHours] = useState(6);
-
+  // Function that compliments available slots per day - Limited to 6 slots per day, by default
   const showMoreDates = () => {
     setExpandHours(expandHours === 6 ? dateArray[1].length : 6);
   };
   return (
     <>
+      {/* If no available slots, the box for the specific day should have different background color */}
       <DayInner className={dateArray[1].length !== 0 ? "" : "noAvailableSlots"}>
         <Flex margin="0 0 10px" alignCenter>
           <DayCol>
@@ -68,6 +70,7 @@ export default function Day({ dateArray, timeslotLength }) {
           </DayCol>
         </Flex>
         <Flex justifyCenter>
+          {/* Mapping and showing the first 6 available time slots by default */}
           {dateArray[1].slice(0, expandHours).map((item, i) => (
             <AvailableSlot key={i} style={{}}>
               {moment(item.datez).format("hh:mmA").toLowerCase()} -{" "}

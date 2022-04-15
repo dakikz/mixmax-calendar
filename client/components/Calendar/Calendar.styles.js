@@ -9,29 +9,4 @@ export const StyledCalendarWrapper = styled.div`
   position: relative;
   z-index: 2;
   background-color: ${colors.white};
-  &:before {
-    z-index: 1;
-    bottom: -130px;
-    right: -30px;
-    content: "";
-    position: absolute;
-    width: 500px;
-    height: 260px;
-    background: rgb(215, 247, 235);
-    background: -moz-linear-gradient(
-      180deg,
-      rgba(215, 247, 235, 1) 0%,
-      rgba(215, 247, 235, 0) 100%
-    );
-    background: -webkit-linear-gradient(
-      180deg,
-      rgba(215, 247, 235, 1) 0%,
-      rgba(215, 247, 235, 0) 100%
-    );
-    background: linear-gradient(
-      180deg,
-      rgba(215, 247, 235, 1) 0%,
-      rgba(215, 247, 235, 0) 100%
-    );
-  }
 `;

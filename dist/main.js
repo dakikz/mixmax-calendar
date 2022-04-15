@@ -798,14 +798,14 @@ var App = function App() {
       userId = _useState4[0]; // Hardcoded userId, for now.
 
 
-  var url = "/api/calendar?hostUserId=".concat(userId);
+  var url = "/api/calendar?hostUserId=".concat(userId); // Rendering bug, needs to be inside a useEffect in order to stop infinite rendering
+  // 3. There is also a rendering bug in the initial implementation that you'll need to find and fix accordingly.
+
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     fetch(url).then(function (response) {
       return response.json();
     }).then(function (response) {
-      setCalendarResponse(response); // console.log(response);
-    })["catch"](function (err) {
-      console.log(err.message);
+      setCalendarResponse(response);
     });
   }, []);
 
@@ -817,10 +817,10 @@ var App = function App() {
     }, "Loading...");
   }
 
-  console.log("App - Rendering Calendar"); // console.log(calendarResponse);
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Flex__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    padding: "16px",
+    style: {
+      padding: "28px 24px"
+    },
     column: true,
     alignCenter: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Header__WEBPACK_IMPORTED_MODULE_4__["default"], {
@@ -829,7 +829,10 @@ var App = function App() {
     post: calendarResponse,
     user: userId
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_Flex__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    justifyEnd: true
+    justifyEnd: true,
+    style: {
+      marginTop: "30px"
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_components_MixmaxUpsell__WEBPACK_IMPORTED_MODULE_5__["default"], null))));
 };
 
@@ -855,7 +858,7 @@ __webpack_require__.r(__webpack_exports__);
 var StyledCalendarWrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div.withConfig({
   displayName: "StyledCalendarWrapper",
   componentId: "sc-8y7sid-0"
-})(["border-radius:4px;max-width:1000px;box-shadow:rgb(45 45 45 / 12%) 0px 4px 12px;padding:24px;position:relative;z-index:2;background-color:", ";&:before{z-index:1;bottom:-130px;right:-30px;content:\"\";position:absolute;width:500px;height:260px;background:rgb(215,247,235);background:-moz-linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );background:-webkit-linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );background:linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );}"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_0__.colors.white);
+})(["border-radius:4px;max-width:1000px;box-shadow:rgb(45 45 45 / 12%) 0px 4px 12px;padding:24px;position:relative;z-index:2;background-color:", ";"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_0__.colors.white);
 
 /***/ }),
 
@@ -909,10 +912,11 @@ var DayOuter = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div.wit
 var ChangeWeek = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div.withConfig({
   displayName: "ChangeWeek",
   componentId: "sc-1qsx8w1-1"
-})(["display:flex;gap:10px;& div{display:flex;justify-content:center;align-items:center;width:40px;height:40px;border:1px solid ", ";border-radius:100%;padding:7px;cursor:pointer;&.disabled{opacity:0.5;}&.profPic{background-color:", ";border-color:", ";color:", ";}}"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.lightGrey, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.purple, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.purple, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.white);
+})(["display:flex;gap:10px;margin-bottom:20px;& div{display:flex;justify-content:center;align-items:center;width:40px;height:40px;border:1px solid ", ";border-radius:100%;padding:7px;cursor:pointer;&.disabled{opacity:0.5;}&.profPic{background-color:", ";border-color:", ";color:", ";}}"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.lightGrey, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.purple, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.purple, _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.white);
 function Calendar(_ref) {
   var post = _ref.post,
       user = _ref.user;
+  // Mapping, grouping and sorting the data to be used according to our needs
   var obj = post.timeslots.map(function (x) {
     var obj = {
       datez: x,
@@ -937,7 +941,8 @@ function Calendar(_ref) {
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(daysToShow),
       _useState4 = _slicedToArray(_useState3, 2),
       lastDay = _useState4[0],
-      setLastDay = _useState4[1];
+      setLastDay = _useState4[1]; // Functions to compliment data mapping to show only 7 days - Next and Previous buttons
+
 
   var nextWeek = function nextWeek() {
     if (lastDay >= dataa.length) return;
@@ -972,7 +977,15 @@ function Calendar(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react_icons_fi__WEBPACK_IMPORTED_MODULE_8__.FiChevronRight, {
     color: _config_genericStyles__WEBPACK_IMPORTED_MODULE_6__.colors.lightGrey,
     size: 20
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_4__["default"], null, dataa.slice(firstDay, lastDay).map(function (dayEntry, idx) {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    dimmed: true,
+    style: {
+      fontSize: "14px",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }
+  }, moment__WEBPACK_IMPORTED_MODULE_0___default()(dataa.timeslots).format("MMMM YYYY"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Flex__WEBPACK_IMPORTED_MODULE_4__["default"], null, dataa.slice(firstDay, lastDay).map(function (dayEntry, idx) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
       key: idx
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(DayOuter, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_Day__WEBPACK_IMPORTED_MODULE_3__["default"], {
@@ -1023,7 +1036,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 var DayInner = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "DayInner",
   componentId: "sc-1823sn-0"
-})(["width:100%;background-color:", ";&.noAvailableSlots{background-color:", ";}"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_4__.colors.white, _config_genericStyles__WEBPACK_IMPORTED_MODULE_4__.colors.offwhite);
+})(["width:100%;background-color:", ";border-radius:4px;&.noAvailableSlots{background-color:", ";}"], _config_genericStyles__WEBPACK_IMPORTED_MODULE_4__.colors.white, _config_genericStyles__WEBPACK_IMPORTED_MODULE_4__.colors.offwhite);
 var AvailableSlot = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "AvailableSlot",
   componentId: "sc-1823sn-1"
@@ -1043,7 +1056,8 @@ function Day(_ref) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(6),
       _useState2 = _slicedToArray(_useState, 2),
       expandHours = _useState2[0],
-      setExpandHours = _useState2[1];
+      setExpandHours = _useState2[1]; // Function that compliments available slots per day - Limited to 6 slots per day, by default
+
 
   var showMoreDates = function showMoreDates() {
     setExpandHours(expandHours === 6 ? dateArray[1].length : 6);
@@ -1213,12 +1227,17 @@ __webpack_require__.r(__webpack_exports__);
 function Header(_ref) {
   var calendarName = _ref.calendarName;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Header_styles__WEBPACK_IMPORTED_MODULE_1__.StyledHeader, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    "text-medium": true,
     as: "h3",
-    bold: true,
-    margin: "16px 0"
+    fontWeight: "500",
+    style: {
+      fontSize: "21px"
+    }
   }, "Schedule a meeting with ", calendarName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Typography__WEBPACK_IMPORTED_MODULE_2__["default"], {
     dimmed: true,
-    small: true
+    style: {
+      fontSize: "13px"
+    }
   }, "Please pick a time slot below."));
 }
 Header.propTypes = {
@@ -1369,7 +1388,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,styled_components__WEBPACK_IMPORTED_MODULE_0__.createGlobalStyle)(["*,*::before,*::after{box-sizing:border-box;}*{margin:0;}html,body{height:100%;}body{line-height:1.5;font-size:16px;font-family:'Roboto',sans-serif;-webkit-font-smoothing:antialiased;}img,picture,video,canvas,svg{display:block;max-width:100%;}input,button,textarea,select{font:inherit;}p,h1,h2,h3,h4,h5,h6{overflow-wrap:break-word;}#app{isolation:isolate;}"]));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,styled_components__WEBPACK_IMPORTED_MODULE_0__.createGlobalStyle)(["*,*::before,*::after{box-sizing:border-box;}*{margin:0;}html,body{height:100%;}body{line-height:1.5;font-size:16px;font-family:apple-system,BlinkMacSystemFont,\"Roboto\",\"Helvetica Neue\",\"Trebuchet MS\",\"Segoe\",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;&:before{z-index:0;bottom:20%;right:calc(50% - 550px);content:\"\";position:absolute;width:500px;height:260px;background:rgb(215,247,235);background:-moz-linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );background:-webkit-linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );background:linear-gradient( 180deg,rgba(215,247,235,1) 0%,rgba(215,247,235,0) 100% );}}img,picture,video,canvas,svg{display:block;max-width:100%;}input,button,textarea,select{font:inherit;}p,h1,h2,h3,h4,h5,h6{overflow-wrap:break-word;}#app{isolation:isolate;}"]));
 
 /***/ }),
 

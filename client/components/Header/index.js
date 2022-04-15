@@ -1,16 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { StyledHeader } from './Header.styles';
-import Typography from '../Typography';
+import { StyledHeader } from "./Header.styles";
+import Typography from "../Typography";
 
 export default function Header({ calendarName }) {
   return (
     <StyledHeader>
-      <Typography as='h3' bold margin='16px 0'>
+      <Typography
+        text-medium
+        as="h3"
+        fontWeight="500"
+        style={{ fontSize: "21px" }}
+      >
         Schedule a meeting with {calendarName}
       </Typography>
-      <Typography dimmed small>
+      <Typography dimmed style={{ fontSize: "13px" }}>
         Please pick a time slot below.
       </Typography>
     </StyledHeader>
