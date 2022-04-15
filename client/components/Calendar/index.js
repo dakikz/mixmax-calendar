@@ -1,17 +1,45 @@
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import _ from "lodash";
-
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Day from "../Day";
 import Flex from "../Flex";
 import styled from "styled-components";
+import Typography from "../Typography";
+import { colors } from "../../config/genericStyles";
 
-const CalendarOuter = styled.div`
+const DayOuter = styled.div`
   display: flex;
-  border: 1px solid greenyellow;
+  align-items: center;
+  flex-direction: column;
+  width: calc((100% / 7) - 12px);
+  margin-right: 12px;
+`;
+const ChangeWeek = styled.div`
+  display: flex;
+  gap: 10px;
+  & div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid ${colors.lightGrey};
+    border-radius: 100%;
+    padding: 7px;
+    cursor: pointer;
+    &.disabled {
+      opacity: 0.5;
+    }
+    &.profPic {
+      background-color: ${colors.purple};
+      border-color: ${colors.purple};
+      color: ${colors.white};
+    }
+  }
 `;
 
-export default function Calendar({ post }) {
+export default function Calendar({ post, user }) {
   const obj = post.timeslots
     .map((x) => {
       let obj = {
@@ -25,17 +53,55 @@ export default function Calendar({ post }) {
   const groupedData2 = _.groupBy(obj, "date");
   const dataa = Object.entries(groupedData2);
 
-  return (
-    <Flex>
-      {dataa.map((dayEntry, idx) => (
-        <CalendarOuter key={idx}>
-          <strong>{moment(dayEntry[1][0].datez).format("ddd")}</strong>
-          {moment(dayEntry[1][0].datez).format("MMM D")}
-          <Day dateArray={dayEntry} />
+  const daysToShow = 7;
+  const [firstDay, setFirstDay] = useState(0);
+  const [lastDay, setLastDay] = useState(daysToShow);
 
-          <br />
-        </CalendarOuter>
-      ))}
-    </Flex>
+  const nextWeek = () => {
+    if (lastDay >= dataa.length) return;
+    setFirstDay(firstDay + daysToShow);
+    setLastDay(lastDay + daysToShow);
+  };
+  const lastWeek = () => {
+    if (firstDay === 0) return;
+    setFirstDay(firstDay - daysToShow);
+    setLastDay(lastDay - daysToShow);
+  };
+
+  return (
+    <>
+      <ChangeWeek>
+        <div
+          className="profPic"
+          onClick={() => alert("You are logged in as " + user)}
+        >
+          {user.charAt(0).toUpperCase()}
+        </div>
+        <div
+          onClick={() => lastWeek()}
+          className={firstDay === 0 ? "disabled" : ""}
+        >
+          <FiChevronLeft color={colors.lightGrey} size={20} />
+        </div>
+        <div
+          onClick={() => nextWeek()}
+          className={lastDay >= dataa.length ? "disabled" : ""}
+        >
+          <FiChevronRight color={colors.lightGrey} size={20} />
+        </div>
+      </ChangeWeek>
+      <Flex>
+        {dataa.slice(firstDay, lastDay).map((dayEntry, idx) => (
+          <React.Fragment key={idx}>
+            <DayOuter>
+              <Day
+                dateArray={dayEntry}
+                timeslotLength={post.timeslotLengthMinutes}
+              />
+            </DayOuter>
+          </React.Fragment>
+        ))}
+      </Flex>
+    </>
   );
 }

@@ -36,10 +36,12 @@ const App = function () {
 
   return (
     <Flex padding="16px" column alignCenter>
-      {/* <Header calendarName={calendarResponse.name} /> */}
+      <Header calendarName={calendarResponse.name} />
       <StyledCalendarWrapper>
-        <Calendar post={calendarResponse} />
-        <Flex justifyEnd>{/* <MixmaxUpsell /> */}</Flex>
+        <Calendar post={calendarResponse} user={userId} />
+        <Flex justifyEnd>
+          <MixmaxUpsell />
+        </Flex>
       </StyledCalendarWrapper>
     </Flex>
   );
